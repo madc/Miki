@@ -1,0 +1,7 @@
+{% extends "wiki.html.twig" %}
+
+{% block title %}{{ page.name }}{% endblock %}
+
+{% block content %}
+	{{ wikiContent|raw }}
+{% endblock %}

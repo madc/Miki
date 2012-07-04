@@ -1,0 +1,9 @@
+body { padding-top: 60px; position: relative; }
+
+#form_pageContent { width:100%; min-height:400px; resize:vertical; }
+
+a[href^="https:"],
+a[href^="http:"] { }
+
+a[href^="https:"]:hover,
+a[href^="http:"]:hover { background: url('../img/external.png') no-repeat right top;}

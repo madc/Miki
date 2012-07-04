@@ -1,0 +1,67 @@
+{% set baseUrl = 'http://' ~ app.request.host ~ app.request.basepath %}
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+	
+		<link href="{{ baseUrl }}/css/{{ app.stylesheet }}" rel="stylesheet">
+		<link href="{{ baseUrl }}/css/bootstrap-responsive.min.css" rel="stylesheet">
+		<link href="{{ baseUrl }}/css/styles.css" rel="stylesheet">
+		<title>{% block title %}{% endblock %} - Miki.</title>
+	
+		{% block stylesheets %}
+		{% endblock %}
+
+		<link rel="shortcut icon" href="/favicon.ico">
+		<base href="{{ baseUrl }}/">
+	</head>
+
+	<body>
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
+				<div class="container">
+					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</a>
+					<span class="brand">{{ page.categories }}/<strong>{{ page.name }}</strong></span>
+					
+					<div class="nav-collapse" id="main-menu">
+						<ul id="main-menu-left" class="nav">
+							<li><a href="{{ app.request.basepath }}/"><i class="icon-home"></i> Home</a></li>
+
+							<!--<li id="preview-menu" class="dropdown">
+								<a href="#" data-toggle="dropdown" class="dropdown-toggle">Categories <b class="caret"></b></a>
+								<ul class="dropdown-menu">
+									<li><a href="bootstrap.min.css" target="_blank">Cat1</a></li>
+								</ul>
+							</li>-->
+						</ul>
+						
+						<ul id="main-menu-right" class="nav pull-right">
+							<li><a href="{{ path('page_edit', { wikiPage: page.url }) }}"><i class="icon-edit"></i> Edit Page</a></li>
+							{% if app.auth %}<li><a href="{{ path('logout') }}"><i class="icon-off"></i> Logout</a></li>{% endif %}
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="container">		
+
+		{% block content %}
+		{% endblock %}
+
+			<hr>
+
+			<footer>
+				{% if (page is defined and page.file is defined) %}
+				<small>File: {{ page.file.name }} (Last Updated: {{ page.file.lastMod|date('d.m.Y, H:i') }})</small>
+				{% endif %}
+			</footer>
+		</div>
+	</body>
+</html>
