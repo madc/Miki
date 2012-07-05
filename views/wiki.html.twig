@@ -16,6 +16,7 @@
 
 		<link rel="shortcut icon" href="/favicon.ico">
 		<base href="{{ baseUrl }}/">
+		
 	</head>
 
 	<body>
@@ -42,7 +43,7 @@
 						</ul>
 						
 						<ul id="main-menu-right" class="nav pull-right">
-							<li><a href="{{ path('page_edit', { wikiPage: page.url }) }}"><i class="icon-edit"></i> Edit Page</a></li>
+							<li><a href="{{ path('page_edit', { wikiPage: page.url }) }}" id="page_edit"><i class="icon-edit"></i> Edit Page</a></li>
 							{% if app.auth %}<li><a href="{{ path('logout') }}"><i class="icon-off"></i> Logout</a></li>{% endif %}
 						</ul>
 					</div>
@@ -61,5 +62,10 @@
 				<small>File: {{ page.file }}{% if page.lastMod is defined %} (Last Updated: {{ page.lastMod|date('d.m.Y, H:i') }}){% endif %}</small>
 			</footer>
 		</div>
+
+		<script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
+		<script src="js/jquery-plugins.min.js" type="text/javascript"></script>
+		<script src="js/functions.js" type="text/javascript"></script>
+
 	</body>
 </html>
