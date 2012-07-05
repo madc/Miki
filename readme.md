@@ -4,8 +4,21 @@ Miki. is a small [markdown](http://daringfireball.net/projects/markdown/)-based 
 
 ##Installation
 
-The installation progress is described at the official (Silex website)[http://silex.sensiolabs.org/download].
-After installing the vendors, just look inside the src/config.php and change what you like.
+First clone the repository.
+~~~
+$ git clone https://github.com/madc/Miki..git
+$ cd Miki./
+~~~
+
+Get [Composer](http://getcomposer.org) and install vendors.
+~~~
+$ curl -s http://getcomposer.org/installer | php
+$ php composer.phar install
+~~~
+
+Visit the Miki. startpage in your broser and setup your first page. You probably find it somewhere like <http://localhost/path/to/Miki./web/>
+
+Inside 'src/config.php' you can change the settings as you like.
 
 ##Features
 

@@ -33,32 +33,36 @@ $app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
 	$page = array_pop( $categories );
 	$categoriesString = implode('/', $categories);
 	
+	$pageArray = array(
+		'page' => array(
+			'name' => ucfirst( $page ),
+	 		'categories' => $categoriesString,
+			'url' => $wikiPage,
+			'file' => $wikiPage.'.md'
+		)
+	);
+	
 	if( !$fs->exists($app['wiki.path']) )
-		$fs->mkdir( $app['wiki.path'], 0777 );
+		$fs->mkdir( $app['wiki.path'], 0664 );
 
 	if( !empty($categories) && !$fs->exists( $app['wiki.path'].$categoriesString) )
-		$fs->mkdir( $app['wiki.path'].$categoriesString, 0777 );
-
-	$fileArray = array();
+		$fs->mkdir( $app['wiki.path'].$categoriesString, 0664 );
 
 	if( $fs->exists( $app['wiki.path'].$wikiPage.'.md' ) )
 	{
 		$fh = fopen( $app['wiki.path'].$wikiPage.'.md', 'r' );
-		$mdownContent = fread( $fh, filesize($app['wiki.path'].$wikiPage.'.md') );
+		$content = fread( $fh, filesize($app['wiki.path'].$wikiPage.'.md') );
 		fclose($fh);
 
-		$fileArray['name'] = $wikiPage.'.md';
-		$fileArray['lastMod'] = filemtime( $app['wiki.path'].$wikiPage.'.md' );
+		$pageArray['page']['lastMod'] = filemtime( $app['wiki.path'].$wikiPage.'.md' );
 	}
+	$pageArray['page']['content'] = ( !empty($content) ? $content : '#'.ucfirst( $page ) );
 
-	if( empty($mdownContent) )
-		$mdownContent = '#'.ucfirst( $page );
-
-	$form = $app['form.factory']->createBuilder('form', array( 'pageContent' => $mdownContent ))
+	$form = $app['form.factory']->createBuilder('form', array( 'pageContent' => $pageArray['page']['content'] ))
 		->add('pageContent', 'textarea')
 		->getForm();
 
-	if( 'POST' === $app['request']->getMethod() )
+	if( $app['request']->getMethod() === 'POST' )
 	{
 		$form->bindRequest($app['request']);
 		$data = $form->getData();
@@ -70,15 +74,9 @@ $app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
 		return $app->redirect( $app['url_generator']->generate('page', array( 'wikiPage' => $wikiPage )) );
 	}
 
-	return $app['twig']->render( 'wiki_form.html.twig', array(
-		'page' => array(
-			'name' => ucfirst( $page ),
-			'categories' => $categoriesString,
-			'url' => $wikiPage,
-			'file' => $fileArray
-		),
-		'form' => $form->createView()
-	));
+	$pageArray['form'] = $form->createView();
+		
+	return $app['twig']->render( 'wiki_form.html.twig', $pageArray );
 })	->bind('page_edit')
 	->method('POST|GET')
 	->assert('wikiPage', '.+');
@@ -93,41 +91,32 @@ $app->get('/{wikiPage}', function($wikiPage) use ($app)
 	$page = array_pop( $categories );
 	$categoriesString = implode('/', $categories);
 	
+	$pageArray = array(
+		'page' => array(
+			'name' => ucfirst( $page ),
+	 		'categories' => $categoriesString,
+			'url' => $wikiPage,
+			'file' => $wikiPage.'.md'
+		)
+	);
+	
 	if( $fs->exists( $app['wiki.path'].$wikiPage.'.md' ) )
 	{
 		$fh = fopen( $app['wiki.path'].$wikiPage.'.md', 'r' );
 		$content = fread( $fh, filesize($app['wiki.path'].$wikiPage.'.md') );
 		fclose($fh);
 		
-		$fileArray = array(
-			'name' => $wikiPage.'.md',
-			'lastMod' => filemtime( $app['wiki.path'].$wikiPage.'.md' )
-		);
-	}
-	
-	$mdownContent = $mdownParser->transformMarkdown( $content );
-	
-	/*		//	"<a\s[^>]*href=(\"??)(http[^\" >]*?)\\1[^>]*>(.*)<\/a>"
-	$regexp = 	"<a\s[^>]*href=(\"??)(((http|https|ftp|ftps))[^\" >]*?)\\1[^>]*>(.*)<\/a>";
-	if(preg_match_all("/$regexp/siU", $mdownContent, $matches, PREG_SET_ORDER)) {
-		foreach($matches as $match) {
-			var_dump($match);
+		$pageArray['page']['lastMod'] = filemtime( $app['wiki.path'].$wikiPage.'.md' );
+		
+		if( !empty($content) )
+		{
+			$pageArray['page']['content'] = $mdownParser->transformMarkdown( $content );
+
+			return $app['twig']->render( 'wiki_content.html.twig', $pageArray );
 		}
-	}*/
-	
-	if( isset($mdownContent) && !empty($mdownContent) )
-		return $app['twig']->render( 'wiki_content.html.twig', array(
-			'page' => array(
-				'name' => ucfirst( $page ),
-				'categories' => $categoriesString,
-				'url' => $wikiPage,
-				'file' => $fileArray
-			),
-			'wikiContent' => $mdownContent
-		));
-	
+	}
+
 	return $app->redirect( $app['url_generator']->generate('page_edit', array( 'wikiPage' => $wikiPage )) );
-	
 })
 	->value('wikiPage', 'index')
 	->bind('page')

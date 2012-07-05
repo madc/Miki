@@ -58,9 +58,7 @@
 			<hr>
 
 			<footer>
-				{% if (page is defined and page.file is defined) %}
-				<small>File: {{ page.file.name }} (Last Updated: {{ page.file.lastMod|date('d.m.Y, H:i') }})</small>
-				{% endif %}
+				<small>File: {{ page.file }}{% if page.lastMod is defined %} (Last Updated: {{ page.lastMod|date('d.m.Y, H:i') }}){% endif %}</small>
 			</footer>
 		</div>
 	</body>
