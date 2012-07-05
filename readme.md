@@ -43,6 +43,14 @@ The pages can also easily be organized in categories. This can be achieved by us
 [Linkname w. Category](category/pagename)
 ~~~
 
+###Hotkeys
+
+The following keyboard shortcuts are available at the moment:
+
+* Ctrl+E (or Cmd+E on MacOS X) to switch to Edit-Mode
+* Ctrl+S (or Cmd+S) to save changes
+* Alt+Ctrl+X (or Alt+Cmd+X) to dismiss changes
+
 ###Theme-able via Twitter Bootstrap
 
 The style is borrowed from Twitter Bootstrap and the used theme is called **Spacelab** and can be found on [Bootswatch](http://bootswatch.com/spacelab/). 
