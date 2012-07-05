@@ -41,12 +41,6 @@ $app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
 			'file' => $wikiPage.'.md'
 		)
 	);
-	
-	if( !$fs->exists($app['wiki.path']) )
-		$fs->mkdir( $app['wiki.path'], 0664 );
-
-	if( !empty($categories) && !$fs->exists( $app['wiki.path'].$categoriesString) )
-		$fs->mkdir( $app['wiki.path'].$categoriesString, 0664 );
 
 	if( $fs->exists( $app['wiki.path'].$wikiPage.'.md' ) )
 	{
@@ -64,6 +58,12 @@ $app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
 
 	if( $app['request']->getMethod() === 'POST' )
 	{
+		if( !$fs->exists($app['wiki.path']) )
+			$fs->mkdir( $app['wiki.path'], 0777 );
+
+		if( !empty($categories) && !$fs->exists( $app['wiki.path'].$categoriesString) )
+			$fs->mkdir( $app['wiki.path'].$categoriesString, 0777 );
+		
 		$form->bindRequest($app['request']);
 		$data = $form->getData();
 
