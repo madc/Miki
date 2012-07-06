@@ -111,7 +111,7 @@ $app->get('/{wikiPage}', function($wikiPage) use ($app)
 		if( !empty($content) )
 		{
 			$pageArray['page']['content'] = $mdownParser->transformMarkdown( $content );
-
+			var_dump($pageArray['page']['content']); exit;
 			return $app['twig']->render( 'wiki_content.html.twig', $pageArray );
 		}
 	}

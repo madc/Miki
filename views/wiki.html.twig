@@ -32,7 +32,7 @@
 					
 					<div class="nav-collapse" id="main-menu">
 						<ul id="main-menu-left" class="nav">
-							<li><a href="{{ app.request.basepath }}/"><i class="icon-home"></i> Home</a></li>
+							<li><a href="{{ app.request.basepath }}/" id="menu_home"><i class="icon-home"></i> Home</a></li>
 
 							<!--<li id="preview-menu" class="dropdown">
 								<a href="#" data-toggle="dropdown" class="dropdown-toggle">Categories <b class="caret"></b></a>
@@ -43,15 +43,29 @@
 						</ul>
 						
 						<ul id="main-menu-right" class="nav pull-right">
-							<li><a href="{{ path('page_edit', { wikiPage: page.url }) }}" id="page_edit"><i class="icon-edit"></i> Edit Page</a></li>
-							{% if app.auth %}<li><a href="{{ path('logout') }}"><i class="icon-off"></i> Logout</a></li>{% endif %}
+							{% if app.request.attributes.get('_route') != 'page_edit' %}
+							<li>
+								<a href="{{ path('page_edit', { wikiPage: page.url }) }}" id="page_edit">
+									<i class="icon-edit"></i>
+									Edit Page
+								</a>
+							</li>
+							{% endif %}
+							{% if app.auth %}
+							<li>
+								<a href="{{ path('logout') }}">
+									<i class="icon-off"></i>
+									Logout
+								</a>
+							</li>
+							{% endif %}
 						</ul>
 					</div>
 				</div>
 			</div>
 		</div>
 		
-		<div class="container">		
+		<div class="container">
 
 		{% block content %}
 		{% endblock %}
