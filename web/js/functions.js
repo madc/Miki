@@ -7,7 +7,7 @@ $(document).ready(function() {
 	$('#form_pageContent').bind('keydown.'+key+'_s',function(){ $('form').submit(); return false; });
 	$(document).bind('keydown.alt_'+key+'_x',function(){ location.href = $('#form_cancel').attr('href'); return false; });
 	$(document).bind('keydown.'+key+'_e',function(){ location.href = $('#page_edit').attr('href'); return false; });
-	$(document).bind('keydown.'+key+'_h',function(){ location.href = $('#menu_home').attr('href'); return false; });
+	$(document).bind('keydown.alt_'+key+'_h',function(){ location.href = $('#menu_home').attr('href'); return false; });
 	
 	//Textaea height
 	$(window).resize(function() {
