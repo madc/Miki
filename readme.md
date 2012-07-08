@@ -30,6 +30,10 @@ The authentication is based on this [Gist](https://gist.github.com/1740012) by M
 ###Pages
 
 The first page of your wiki will be the 'Index'. With the default settings, it can be found in 'data/wiki/index.md'. To create a new page, exit the index page and insert a markdown link. After clicking on the link you will get the mask to create a new page.
+
+**Hint**
+>Clicking on the page name in header will list all other pages inside the actual category lad allow easy switching.
+
 **Example**
 ~~~
 [Linkname](pagename)
@@ -38,6 +42,7 @@ The first page of your wiki will be the 'Index'. With the default settings, it c
 ###Categories
 
 The pages can also easily be organized in categories. This can be achieved by using a slash inside the page link.
+
 **Example**
 ~~~
 [Linkname w. Category](category/pagename)
@@ -50,7 +55,8 @@ The following keyboard shortcuts are available at the moment:
 * Ctrl+E (or Cmd+E on MacOS X) to switch to Edit-Mode
 * Ctrl+S (or Cmd+S) to save changes
 * Alt+Ctrl+X (or Alt+Cmd+X) to dismiss changes
+* Alt+Ctrl+H (or Alt+Cmd+H) to jump to home
 
-###Theme-able via Twitter Bootstrap
+###Responsible and theme-able via Twitter Bootstrap
 
 The style is borrowed from Twitter Bootstrap and the used theme is called **Spacelab** and can be found on [Bootswatch](http://bootswatch.com/spacelab/). 
