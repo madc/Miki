@@ -30,11 +30,11 @@
 					</a>
 						
 					<ul class="nav">
-						{% for category in page.categories %}
-						<li>
+						<li class="category">
+							{% for category in page.categories %}
 							<a>{{ category }}/</a>
+							{% endfor %}
 						</li>
-						{% endfor %}
 					    <li class="dropdown">
 					    	<a class="dropdown-toggle brand" data-toggle="dropdown">
 					    		<strong>{{ page.name }}</strong>
@@ -53,18 +53,9 @@
 					</ul>
 					
 					<div class="nav-collapse" id="main-menu">
-						<ul id="main-menu-left" class="nav">
-							<li><a href="{{ app.request.basepath }}/" id="menu_home"><i class="icon-home"></i> Home</a></li>
-
-							<!--<li id="preview-menu" class="dropdown">
-								<a href="#" data-toggle="dropdown" class="dropdown-toggle">Categories <b class="caret"></b></a>
-								<ul class="dropdown-menu">
-									<li><a href="bootstrap.min.css" target="_blank">Cat1</a></li>
-								</ul>
-							</li>-->
-						</ul>
-						
 						<ul id="main-menu-right" class="nav pull-right">
+							<li><a href="{{ app.request.basepath }}/" id="menu_home"><i class="icon-home"></i> Home</a></li>
+							
 							{% if app.request.attributes.get('_route') != 'page_edit' %}
 							<li>
 								<a href="{{ path('page_edit', { wikiPage: page.url }) }}" id="page_edit">
