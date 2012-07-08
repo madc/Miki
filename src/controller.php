@@ -1,6 +1,7 @@
 <?php
 
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
 use dflydev\markdown\MarkdownExtraParser;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
@@ -25,6 +26,19 @@ $app->get('/logout', function() use ($app)
 	return $app->redirect( $app['url_generator']->generate('login') );
 })->bind('logout');
 
+$app->get('/view/{mode}', function($mode) use ($app)
+{
+	$mdownParser = new MarkdownExtraParser();
+	$content = $mdownParser->transformMarkdown( $app['request']->request->get('content') );
+	
+	if( $mode == 'raw' )
+		$content = nl2br( strip_tags($content) );
+	
+	return $content;
+	
+})	->bind('preview')
+	->method('POST');
+
 $app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
 {
 	$fs = new Filesystem();
@@ -36,7 +50,7 @@ $app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
 	$pageArray = array(
 		'page' => array(
 			'name' => ucfirst( $page ),
-	 		'categories' => $categoriesString,
+	 		'categories' => $categories,
 			'url' => $wikiPage,
 			'file' => $wikiPage.'.md'
 		)
@@ -94,7 +108,7 @@ $app->get('/{wikiPage}', function($wikiPage) use ($app)
 	$pageArray = array(
 		'page' => array(
 			'name' => ucfirst( $page ),
-	 		'categories' => $categoriesString,
+	 		'categories' => $categories,
 			'url' => $wikiPage,
 			'file' => $wikiPage.'.md'
 		)
@@ -105,6 +119,22 @@ $app->get('/{wikiPage}', function($wikiPage) use ($app)
 		$fh = fopen( $app['wiki.path'].$wikiPage.'.md', 'r' );
 		$content = fread( $fh, filesize($app['wiki.path'].$wikiPage.'.md') );
 		fclose($fh);
+		
+		$finder = new Finder();
+		$files = $finder
+			->files()
+			->in( $app['wiki.path'].$categoriesString )
+			->depth(0)
+			->name('*.md');
+ 
+		foreach ($files as $file)
+		{
+		  if( ($categoriesString ? $categoriesString.'/' : '').$file->getRelativePathname() != $pageArray['page']['file'])
+			  $pageArray['page']['siblings'][] = array(
+				  'name' => ucfirst(substr($file->getRelativePathname(), 0, -3)),
+				  'url' => ($categoriesString ? $categoriesString.'/' : '').substr($file->getRelativePathname(), 0, -3)
+			  );
+		}
 		
 		$pageArray['page']['lastMod'] = filemtime( $app['wiki.path'].$wikiPage.'.md' );
 		

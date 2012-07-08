@@ -13,4 +13,18 @@ $(document).ready(function() {
 	$(window).resize(function() {
 		$('#form_pageContent').height( $(window).height() - 280);
 	}).resize();
+	
+	//Tabs
+	$('.nav-tabs a').click(function(e) {
+
+		var mode = this.hash.slice(1);
+		if( mode != 'edit' )
+			$('#'+mode).load( 'view/'+mode, { 'content': $('#form_pageContent').val() } );
+		
+		if( mode )
+			$('.nav-tabs .dropdown-toggle span').html( $(this).html() );
+			
+		$(this).tab('show');
+		e.preventDefault();
+	})
 });

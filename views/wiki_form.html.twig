@@ -4,34 +4,45 @@
 
 {% block content %}
 	<ul class="nav nav-tabs">
-    	<li class="active">
-    		<a href="{{ path('page_edit', { wikiPage: page.url }) }}#edit">Edit</a>
-    	</li>
-    	<!--<li>
-			<a href="{{ path('page_edit', { wikiPage: page.url }) }}#preview">Preview</a>
+		<li class="dropdown pull-right">
+			<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>Edit</span> <b class="caret"></b></a>
+			<ul class="dropdown-menu">
+		    	<li class="active">
+		    		<a href="{{ path('page_edit', { wikiPage: page.url }) }}#edit">Edit</a>
+		    	</li>
+		    	<li>
+					<a href="{{ path('page_edit', { wikiPage: page.url }) }}#preview">Preview</a>
+				</li>
+		    	<li>
+					<a href="{{ path('page_edit', { wikiPage: page.url }) }}#raw">Raw</a>
+				</li>
+			</ul>
 		</li>
-    	<li>
-			<a href="{{ path('page_edit', { wikiPage: page.url }) }}#raw">Raw</a>
-		</li>-->
     </ul>
 	
-	<form action="" method="post" id="edit" novalidate class="form-horizontal">
-        {{ form_widget(form.pageContent) }}
-		{{ form_rest(form) }}
-        <div class="form-actions">
-			<div class="pull-right">
-				<a href="{{ path('page', { wikiPage: page.url }) }}" class="btn" id="form_cancel">
-					<i class="icon-remove-circle"></i>
-					Cancel
-				</a>
-            	<button type="submit" class="btn btn-inverse">
-					<i class="icon-ok-circle icon-white"></i>
-					Save
-				</button>
-        	</div>
-		</div>
-    </form>
+	<div class="tab-content">
+		<form action="" method="post" id="edit" novalidate class="form-horizontal tab-pane fade in active">
+	        {{ form_widget(form.pageContent) }}
+			{{ form_rest(form) }}
+	        <div class="form-actions">
+				<div class="pull-right">
+					<a href="{{ path('page', { wikiPage: page.url }) }}" class="btn" id="form_cancel">
+						<i class="icon-remove-circle"></i>
+						Cancel
+					</a>
+	            	<button type="submit" class="btn btn-inverse">
+						<i class="icon-ok-circle icon-white"></i>
+						Save
+					</button>
+	        	</div>
+			</div>
+	    </form>
 	
-	<div id="preview">
+		<div id="preview" class="tab-pane fade in">
+		</div>
+		
+		<div id="raw" class="tab-pane fade in">
+		</div>
 	</div>
+
 {% endblock %}

@@ -28,7 +28,29 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					</a>
-					<span class="brand">{{ page.categories }}/<strong>{{ page.name }}</strong></span>
+						
+					<ul class="nav">
+						{% for category in page.categories %}
+						<li>
+							<a>{{ category }}/</a>
+						</li>
+						{% endfor %}
+					    <li class="dropdown">
+					    	<a class="dropdown-toggle brand" data-toggle="dropdown">
+					    		<strong>{{ page.name }}</strong>
+					    		{% if page.siblings is defined %}<b class="caret"></b>{% endif %}
+					    	</a>
+							{% if page.siblings is defined %}
+						    <ul class="dropdown-menu">
+							{% for sibling in page.siblings %}
+								<li>
+									<a href="{{sibling.url}}">{{sibling.name}}</a>
+								</li>
+							{% endfor %}
+					    	</ul>
+							{% endif %}
+					    </li>
+					</ul>
 					
 					<div class="nav-collapse" id="main-menu">
 						<ul id="main-menu-left" class="nav">

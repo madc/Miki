@@ -1,5 +1,6 @@
 body { padding-top: 60px; position: relative; }
 
+.brand { cursor:pointer; }
 #form_pageContent { width:100%; min-height:100px; resize:vertical; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
 a[href^="https:"],
