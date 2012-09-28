@@ -3,4 +3,4 @@
 composer.phar
 vendor/
 data/wiki/
-data/upload/
+web/upload/
