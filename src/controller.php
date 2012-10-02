@@ -64,8 +64,17 @@ $app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
 
 		$pageArray['page']['lastMod'] = filemtime( $app['wiki.path'].$wikiPage.'.md' );
 	}
-	$pageArray['page']['content'] = ( !empty($content) ? $content : '#'.ucfirst( $page ) );
-
+	
+	if( empty($content) )
+	{
+		if( strtolower($page) == 'index' )
+			$pageArray['page']['content'] = '# '.ucfirst( end($categories) );
+		else
+			$pageArray['page']['content'] = '# '.ucfirst( $page );
+	}
+	else
+		$pageArray['page']['content'] = $content;
+	
 	$form = $app['form.factory']->createBuilder('form', array( 'pageContent' => $pageArray['page']['content'] ))
 		->add('pageContent', 'textarea')
 		->getForm();
