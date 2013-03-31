@@ -6,6 +6,9 @@ use Symfony\Component\HttpFoundation\Response;
 use dflydev\markdown\MarkdownExtraParser;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
+/** Login
+ *
+ */
 $app->get('/login', function() use ($app) {
 	$username = $app['request']->server->get('PHP_AUTH_USER', false);
 	$password = $app['request']->server->get('PHP_AUTH_PW');
@@ -20,6 +23,9 @@ $app->get('/login', function() use ($app) {
 	return new Response('', '401', array('WWW-Authenticate' => sprintf('Basic realm="%s"', 'Miki. Login')) );
 })->bind('login');
 
+/** Logout
+ *
+ */
 $app->get('/logout', function() use ($app)
 {
 	$app['session']->set('isAuthenticated', false);
@@ -39,6 +45,9 @@ $app->get('/view/{mode}', function($mode) use ($app)
 })	->bind('preview')
 	->method('POST');
 
+/** Edit Page
+ *
+ */
 $app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
 {
 	$fs = new Filesystem();
@@ -76,7 +85,7 @@ $app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
 		$pageArray['page']['content'] = $content;
 	
 	$form = $app['form.factory']->createBuilder('form', array( 'pageContent' => $pageArray['page']['content'] ))
-		->add('pageContent', 'textarea')
+		->add('pageContent', 'textarea', array('attr' => array('class' => 'wmd-input', 'id' => 'wmd-input')))
 		->getForm();
 
 	if( $app['request']->getMethod() === 'POST' )
@@ -104,7 +113,9 @@ $app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
 	->method('POST|GET')
 	->assert('wikiPage', '.+');
 
-
+/** View Page
+ *
+ */
 $app->get('/{wikiPage}', function($wikiPage) use ($app)
 {
 	$mdownParser = new MarkdownExtraParser();

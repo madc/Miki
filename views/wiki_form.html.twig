@@ -22,8 +22,11 @@
 	
 	<div class="tab-content">
 		<form action="" method="post" id="edit" novalidate class="form-horizontal tab-pane fade in active">
-	        {{ form_widget(form.pageContent) }}
-			{{ form_rest(form) }}
+	        <div class="wmd-panel">
+	            <div id="wmd-button-bar"></div>
+		        {{ form_widget(form.pageContent) }}
+				{{ form_rest(form) }}
+			</div>
 	        <div class="form-actions">
 				<div class="pull-right">
 					<a href="{{ path('page', { wikiPage: page.url }) }}" class="btn" id="form_cancel">
