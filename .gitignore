@@ -3,7 +3,4 @@
 composer.phar
 vendor/
 
-data/wiki/
-data/uploads/
-
 web/img/*.icns
