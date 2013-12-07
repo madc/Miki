@@ -1,19 +1,24 @@
 {
+    "name": "madc/miki.",
+    "description": "Miki. is a small markdown-based wiki system.",
+    "keywords": ["wiki", "markdown", "silex", "twig", "php"],
+    "homepage": "https://github.com/madc/Miki./",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matthias Esterl",
+            "email": "inventor@madcity.at"
+        }
+    ],
     "require": {
-        "silex/silex": "1.0.*",
-        "symfony/browser-kit": "2.1.*",
-        "symfony/console": "2.1.*",
-        "symfony/css-selector": "2.1.*",
-        "symfony/dom-crawler": "2.1.*",
-        "symfony/filesystem": "2.1.*",
-        "symfony/finder": "2.1.*",
-		"symfony/translation"   : "2.1.*",
-        "symfony/form": "2.1.*",
-        "symfony/process": "2.1.*",
-        "symfony/security": "2.1.*",
-        "symfony/serializer": "2.1.*",
-        "symfony/twig-bridge": "2.1.*",
-        "twig/twig": ">=1.2.0,<2.0-dev",
-		"dflydev/markdown": "1.0.2 "
+        "silex/silex": "~1.1",
+		
+		"symfony/translation": "2.3.*",
+        "symfony/form": "2.3.*",
+        "symfony/filesystem": "2.3.*",
+		"symfony/finder": "2.3.*",
+		"symfony/twig-bridge": "2.3.*",
+
+		"dflydev/markdown": "1.0.3"
     }
 }
