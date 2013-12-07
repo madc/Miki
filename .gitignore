@@ -2,5 +2,8 @@
 
 composer.phar
 vendor/
+
 data/wiki/
-web/upload/
+data/uploads/
+
+web/img/*.icns

@@ -1,22 +1,19 @@
-body { padding-top: 60px; position: relative; }
+body {}
 
 .container li s { color:#757575; }
 
-.navbar .brand { cursor:pointer; margin-left:-8px; }
-.navbar .nav > li.category > a { float:left; padding-left:0; padding-right:0; }
+
 
 #wmd-input,
 #form_pageContent { width:100%; min-height:100px; resize:vertical; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 
 a[href^="https:"],
-a[href^="http:"] { }
+a[href^="http:"] { padding:0 7px 0 0; background: url('../img/external.png') no-repeat right center; }
 
 a[href^="https:"]:hover,
 a[href^="http:"]:hover { background: url('../img/external.png') no-repeat right top;}
 
-@media (max-width: 979px) {
-	.navbar .nav > li.category{ margin-left:10px; }
-}
+
 
 /* pagedown editor */
 .wmd-button-bar 
