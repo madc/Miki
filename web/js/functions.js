@@ -9,20 +9,10 @@
 		},
 		
 		layout: function()
-		{
-			/* pagedown Editor on edit page */
-			if( $('#form_pageContent').length )
-			{
-				$('#form_pageContent').attr('id', 'wmd-input');
-			
-	            var converter = Markdown.getSanitizingConverter();
-	            var editor = new Markdown.Editor(converter);
-	            editor.run();
-			}
-			
+		{			
 			/* Resize textarea with window. */
 			$(window).resize(function() {
-				$('#wmd-input').height( $(window).height() - 305);
+				$('#form_pageContent').height( $(window).height() - 240);
 			}).resize();
 			
 			/* Tabs for edit page. */
@@ -30,7 +20,7 @@
 
 				var mode = this.hash.slice(1);
 				if( mode != 'edit' )
-					$('#'+mode).load( 'view/'+mode, { 'content': $('#wmd-input').val() } );
+					$('#'+mode).load( 'view/'+mode, { 'content': $('#form_pageContent').val() } );
 		
 				if( mode )
 					$('.nav-tabs .dropdown-toggle span').html( $(this).html() );

@@ -1,120 +1,21 @@
 body {}
 
-#wmd-input,
-#form_pageContent { width:100%; min-height:100px; resize:vertical; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+#form_pageContent {
+	width:100%;
+	min-height:100px;
+	resize:vertical;
+	border: solid #DDDDDD;
+	border-width:0 1px 1px;
+	
+	padding:20px;
+	
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
 
 a[href^="https:"],
 a[href^="http:"] { padding:0 7px 0 0; background: url('../img/external.png') no-repeat right center; }
 
 a[href^="https:"]:hover,
 a[href^="http:"]:hover { background: url('../img/external.png') no-repeat right top;}
-
-
-
-/* pagedown editor */
-.wmd-button-bar 
-{
-	width: 100%;
-	background-color: Silver; 
-}
-
-.wmd-input 
-{ 
-	height: 300px;
-	width: 100%;
-	background-color: Gainsboro;
-	border: 1px solid DarkGray;
-}
-
-.wmd-preview 
-{ 
-	background-color: #c0e0ff; 
-}
-
-.wmd-button-row 
-{
-	position: relative; 
-	margin-left: 5px;
-	margin-right: 5px;
-	margin-bottom: 5px;
-	margin-top: 10px;
-	padding: 0px;  
-	height: 20px;
-}
-
-.wmd-spacer
-{
-	width: 1px; 
-	height: 20px; 
-	margin-left: 14px;
-	
-	position: absolute;
-	background-color: Silver;
-	display: inline-block; 
-	list-style: none;
-}
-
-.wmd-button {
-    width: 20px;
-    height: 20px;
-    padding-left: 2px;
-    padding-right: 3px;
-    position: absolute;
-    display: inline-block;
-    list-style: none;
-    cursor: pointer;
-}
-
-.wmd-button > span {
-    background-image: url(../img/wmd-buttons.png);
-    background-repeat: no-repeat;
-    background-position: 0px 0px;
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-}
-
-.wmd-spacer1
-{
-    left: 50px;
-}
-.wmd-spacer2
-{
-    left: 175px;
-}
-.wmd-spacer3
-{
-    left: 300px;
-}
-
-
-
-
-.wmd-prompt-background
-{
-	background-color: Black;
-}
-
-.wmd-prompt-dialog
-{
-	border: 1px solid #999999;
-	background-color: #F5F5F5;
-}
-
-.wmd-prompt-dialog > div {
-	font-size: 0.8em;
-	font-family: arial, helvetica, sans-serif;
-}
-
-
-.wmd-prompt-dialog > form > input[type="text"] {
-	border: 1px solid #999999;
-	color: black;
-}
-
-.wmd-prompt-dialog > form > input[type="button"]{
-	border: 1px solid #888888;
-	font-family: trebuchet MS, helvetica, sans-serif;
-	font-size: 0.8em;
-	font-weight: bold;
-}
