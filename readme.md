@@ -1,18 +1,19 @@
-#Miki. Documentation
+# Miki. Documentation
 
-Miki. is a small [markdown](http://daringfireball.net/projects/markdown/)-based wiki system. It is written in PHP using the little sister of Symfony2, [Silex](http://silex.sensiolabs.org/), as a basis. The Markdown parsing is handled by [dflydev-markdown](https://github.com/dflydev/dflydev-markdown). No Database is needed as the data are stored as .md files.
+Miki. is a small [markdown](http://daringfireball.net/projects/markdown/)-based wiki system. Beside the basic markdown specs, it also has full support for the [markdown extra extension](http://michelf.ca/projects/php-markdown/extra/). It is written in PHP using the [Silex](http://silex.sensiolabs.org/) framework as basis. The pages are saved as .md files in the file structure, no Database is needed.
 
-##Installation
 
-First clone the repository.
+## Installation
+
+1) Clone the repository.
 ~~~
 $ git clone https://github.com/madc/Miki..git
 $ cd Miki./
 ~~~
 
-Get [Composer](http://getcomposer.org) and install vendors.
+2) Get [Composer](http://getcomposer.org) and install dependencies.
 ~~~
-$ curl -s http://getcomposer.org/installer | php
+$ wget http://getcomposer.org/composer.phar
 $ php composer.phar install
 ~~~
 
@@ -20,14 +21,14 @@ Visit the Miki. startpage in your broser and setup your first page. You probably
 
 Inside 'src/config.php' you can change the settings as you like.
 
-##Features
+## Features
 
-###Basic Authentication
+### Basic Authentication
 
 Miki. supports a Basic Authentication. Have a look at src/config.php to set it up.
 The authentication is based on this [Gist](https://gist.github.com/1740012) by Masao Maeda.
 
-###Pages
+### Pages
 
 The first page of your wiki will be the 'Index'. With the default settings, it can be found in 'data/wiki/index.md'. To create a new page, exit the index page and insert a markdown link. After clicking on the link you will get the mask to create a new page.
 
@@ -39,7 +40,7 @@ The first page of your wiki will be the 'Index'. With the default settings, it c
 [Linkname](pagename)
 ~~~
 
-###Categories
+### Categories
 
 The pages can also easily be organized in categories. This can be achieved by using a slash inside the page link.
 
@@ -48,7 +49,7 @@ The pages can also easily be organized in categories. This can be achieved by us
 [Linkname w. Category](category/pagename)
 ~~~
 
-###Hotkeys
+### Hotkeys
 
 The following keyboard shortcuts are available at the moment:
 
@@ -57,6 +58,6 @@ The following keyboard shortcuts are available at the moment:
 * Alt+Ctrl+X (or Alt+Cmd+X) to dismiss changes
 * Alt+Ctrl+H (or Alt+Cmd+H) to jump to home
 
-###Responsible and theme-able via Twitter Bootstrap
+### Responsible and theme-able via Twitter Bootstrap
 
-The style is borrowed from Twitter Bootstrap and the used theme is called **Spacelab** and can be found on [Bootswatch](http://bootswatch.com/spacelab/). 
+The HTML layout is based on [Bootstrap 3](http://getbootstrap.com/) and the theme css-file can be defined in the settings.
