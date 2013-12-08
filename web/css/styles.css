@@ -42,7 +42,7 @@ a[href^="http:"]:after {
     font-family: "FontAwesome";
     text-decoration: none;
 	
-	content: '\f14c';
+	content: '\f0ac';
 	font-size:60%;
 	vertical-align: super;
 	margin-left:3px;

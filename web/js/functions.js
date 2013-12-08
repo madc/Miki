@@ -19,8 +19,8 @@
 			$('.nav-tabs a').click(function(e) {
 
 				var mode = this.hash.slice(1);
-				if( mode != 'edit' )
-					$('#'+mode).load( 'view/'+mode, { 'content': $('#form_content').val() } );
+				if( mode != 'editor' )
+					$('#'+mode).load('preview/'+mode, {'content': $('#form_content').val()});
 		
 				if( mode )
 					$('.nav-tabs .dropdown-toggle span').html( $(this).html() );

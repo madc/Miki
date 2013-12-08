@@ -20,13 +20,14 @@
 					<button type="button" class="btn btn-default"><i class="fa fa-list-ul"></i></button>
 					<button type="button" class="btn btn-default"><i class="fa fa-code"></i></button>
 					<button type="button" class="btn btn-default"><i class="fa fa-quote-left"></i></button>
+					<button type="button" class="btn btn-default"><i class="fa fa-paperclip"></i></button>
 				</div>
 			</li>-->
 			<li class="dropdown pull-right active">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>Editor</span> <b class="caret"></b></a>
 				<ul class="dropdown-menu">
 			    	<li class="active">
-			    		<a href="{{ path('page_edit', { wikiPage: page.url }) }}#edit">Editor</a>
+			    		<a href="{{ path('page_edit', { wikiPage: page.url }) }}#editor">Editor</a>
 			    	</li>
 			    	<li>
 						<a href="{{ path('page_edit', { wikiPage: page.url }) }}#preview">Preview</a>
@@ -36,11 +37,10 @@
 					</li>
 				</ul>
 			</li>
-
 	    </ul>
 	
 		<div class="tab-content">
-			<form method="post" novalidate class="form-horizontal tab-pane fade in active">
+			<form id="editor" method="post" novalidate class="form-horizontal tab-pane fade in active">
 				{{ form_widget(form.content) }}
 				{{ form_rest(form) }}
 
