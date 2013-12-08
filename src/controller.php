@@ -83,30 +83,6 @@ $app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
 	->method('POST|GET')
 	->assert('wikiPage', '.+');
 
-/** View Page
- *  Needs to be behind the edit controller, otherwise the creation of pages is broken atm.
- */
-$app->get('/{wikiPage}', function($wikiPage) use ($app)
-{	
-	$pageService = $app['service.page'];
-	$page = $pageService($wikiPage);
-	
-	if ($page->exists) {
-		$mdownParser = new MarkdownExtraParser();
-		$parsedContent = $mdownParser->transformMarkdown($page->content);
-
-		return $app['twig']->render('wiki_content.html.twig', array(
-			'page' => $page,
-			'parsedContent' => $parsedContent
-		));
-	} else {
-		return $app->redirect($app['url_generator']->generate('page_edit', array('wikiPage' => $wikiPage)));
-	}
-})
-	->value('wikiPage', 'index')
-	->bind('page')
-	->assert('wikiPage', '.+');
-
 /** Delete Page
  *
  */
@@ -163,6 +139,32 @@ $app->get('/fav/{wikiPage}', function($wikiPage) use ($app)
 	
 	return $app->redirect($app['url_generator']->generate('page', array('wikiPage' => $wikiPage)));
 })	->bind('page_fav')
+	->assert('wikiPage', '.+');
+
+/** View Page
+ *  Needs to be the last controller, otherwise it breaks a lot of stuff.
+ */
+$app->get('/{wikiPage}', function($wikiPage) use ($app)
+{	
+	$pageService = $app['service.page'];
+	$page = $pageService($wikiPage);
+	
+	if ($page->exists) {
+		$mdownParser = new MarkdownExtraParser();
+		$parsedContent = $mdownParser->transformMarkdown($page->content);
+		
+		// Add class to non-existant links
+		
+		return $app['twig']->render('wiki_content.html.twig', array(
+			'page' => $page,
+			'parsedContent' => $parsedContent
+		));
+	} else {
+		return $app->redirect($app['url_generator']->generate('page_edit', array('wikiPage' => $wikiPage)));
+	}
+})
+	->value('wikiPage', 'index')
+	->bind('page')
 	->assert('wikiPage', '.+');
 
 return $app;

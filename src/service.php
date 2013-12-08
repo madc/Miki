@@ -32,7 +32,7 @@ $app['service.page'] = $app->protect(function ($wikiPage) use ($app) {
 			->depth(0)
 			->name('*.md');
 
-		if (count($files)) {
+		if (count($files) > 1) {
 			$page->siblings = array();
 			
 			foreach ($files as $file)
