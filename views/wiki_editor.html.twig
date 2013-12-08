@@ -1,0 +1,66 @@
+{% extends "wiki.html.twig" %}
+
+{% block title %}Edit {{ page.name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-12">
+		<ul class="nav nav-tabs">
+			<!--<li class="editor-buttons">
+				<div class="btn-group btn-group-sm">
+					<button type="button" class="btn btn-default"><i class="fa fa-text-height"></i></button>
+					<button type="button" class="btn btn-default"><i class="fa fa-bold"></i></button>
+					<button type="button" class="btn btn-default"><i class="fa fa-italic"></i></button>
+					<button type="button" class="btn btn-default"><i class="fa fa-link"></i></button>
+					<button type="button" class="btn btn-default"><i class="fa fa-picture-o"></i></button>
+				</div>
+			</li>
+			<li class="editor-buttons">
+				<div class="btn-group btn-group-sm">
+					<button type="button" class="btn btn-default"><i class="fa fa-list-ul"></i></button>
+					<button type="button" class="btn btn-default"><i class="fa fa-code"></i></button>
+					<button type="button" class="btn btn-default"><i class="fa fa-quote-left"></i></button>
+				</div>
+			</li>-->
+			<li class="dropdown pull-right active">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown"><span>Editor</span> <b class="caret"></b></a>
+				<ul class="dropdown-menu">
+			    	<li class="active">
+			    		<a href="{{ path('page_edit', { wikiPage: page.url }) }}#edit">Editor</a>
+			    	</li>
+			    	<li>
+						<a href="{{ path('page_edit', { wikiPage: page.url }) }}#preview">Preview</a>
+					</li>
+			    	<li>
+						<a href="{{ path('page_edit', { wikiPage: page.url }) }}#raw">Raw Text</a>
+					</li>
+				</ul>
+			</li>
+
+	    </ul>
+	
+		<div class="tab-content">
+			<form method="post" id="edit" novalidate class="form-horizontal tab-pane fade in active">
+				{{ form_widget(form.pageContent) }}
+				{{ form_rest(form) }}
+
+				<div class="form-actions pull-right btn-group btn-group-sm">
+					<a href="{{ path('page', { wikiPage: page.url }) }}" class="btn btn-default" id="form_cancel">
+						<i class="fa fa-times"></i>
+					</a>
+	            	<button type="submit" class="btn btn-primary">
+						<i class="fa fa-check"></i>
+						Save
+					</button>
+				</div>
+		    </form>
+	
+			<div id="preview" class="tab-pane fade in">
+			</div>
+		
+			<div id="raw" class="tab-pane fade in">
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

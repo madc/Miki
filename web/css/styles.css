@@ -1,10 +1,54 @@
-body {}
+/* # Global Styles
+================================================== */
+html,
+body {
+	height: 100%;
+}
+
+#wrap {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+
+	margin: 0 auto -50px;
+}
+
+#push,
+footer.main {
+	height: 50px;
+}
+
+footer.main hr {
+	margin: 0 0 13px;
+}
+
+/* External links */
+a[href^="https:"],
+a[href^="http:"] {
+	padding:0 7px 0 0;
+	background: url('../img/external.png') no-repeat right center;
+}
+
+a[href^="https:"]:hover,
+a[href^="http:"]:hover {
+	background: url('../img/external.png') no-repeat right top;
+}
+
+/* # Editor Styles
+================================================== */
+.nav-tabs li a.dropdown-toggle {
+	margin-right:0;
+}
+
+.editor-buttons {
+	margin:4px 10px 0 0;
+}
 
 #form_pageContent {
 	width:100%;
 	min-height:100px;
 	resize:vertical;
-	border: solid #DDDDDD;
+	border: solid #ddd;
 	border-width:0 1px 1px;
 	
 	padding:20px;
@@ -14,8 +58,6 @@ body {}
 	box-sizing: border-box;
 }
 
-a[href^="https:"],
-a[href^="http:"] { padding:0 7px 0 0; background: url('../img/external.png') no-repeat right center; }
-
-a[href^="https:"]:hover,
-a[href^="http:"]:hover { background: url('../img/external.png') no-repeat right top;}
+.form-actions {
+	margin: 10px 15px;
+}

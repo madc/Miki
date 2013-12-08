@@ -3,5 +3,9 @@
 {% block title %}{{ page.name }}{% endblock %}
 
 {% block content %}
-	{{ page.content|raw }}
+<div class="row">
+	<div class="col-md-12">
+		{{ page.content|raw }}
+	</div>
+</div>
 {% endblock %}

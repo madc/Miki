@@ -12,7 +12,7 @@
 		{			
 			/* Resize textarea with window. */
 			$(window).resize(function() {
-				$('#form_pageContent').height( $(window).height() - 240);
+				$('#form_pageContent').height( $(window).height() - 260);
 			}).resize();
 			
 			/* Tabs for edit page. */

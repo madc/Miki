@@ -96,7 +96,7 @@ $app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
 		if( !empty($categories) && !$fs->exists( $app['wiki.path'].$categoriesString) )
 			$fs->mkdir( $app['wiki.path'].$categoriesString, 0777 );
 		
-		$form->bindRequest($app['request']);
+		$form->bind($app['request']);
 		$data = $form->getData();
 
 		$fh = fopen( $app['wiki.path'].$wikiPage.'.md', 'w' );
@@ -108,7 +108,7 @@ $app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
 
 	$pageArray['form'] = $form->createView();
 		
-	return $app['twig']->render( 'wiki_form.html.twig', $pageArray );
+	return $app['twig']->render( 'wiki_editor.html.twig', $pageArray );
 })	->bind('page_edit')
 	->method('POST|GET')
 	->assert('wikiPage', '.+');
