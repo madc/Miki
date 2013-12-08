@@ -37,15 +37,15 @@ a.addFav:hover .fa-star {
 }
 
 /* External links */
-a[href^="https:"],
-a[href^="http:"] {
-	padding:0 7px 0 0;
-	background: url('../img/external.png') no-repeat right center;
-}
-
-a[href^="https:"]:hover,
-a[href^="http:"]:hover {
-	background: url('../img/external.png') no-repeat right top;
+a[href^="https:"]:after,
+a[href^="http:"]:after {
+    font-family: "FontAwesome";
+    text-decoration: none;
+	
+	content: '\f14c';
+	font-size:60%;
+	vertical-align: super;
+	margin-left:3px;
 }
 
 #page_delete:hover {
