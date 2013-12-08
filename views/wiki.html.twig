@@ -34,11 +34,11 @@
 			
 				<div class="collapse navbar-collapse" id="bs-breadcrumbs-collapse-1">
 					<ul class="nav navbar-nav">
+						{% for category in page.categories %}
 						<li class="category">
-							{% for category in page.categories %}
-							<a>{{ category }}/</a>
-							{% endfor %}
+							<a>{{ category }}</a>
 						</li>
+						{% endfor %}
 						{% if page.siblings is defined %}
 						<li class="dropdown">
 							<a class="dropdown-toggle" data-toggle="dropdown">
