@@ -72,6 +72,10 @@
 										<i class="fa fa-pencil"></i>
 										Edit Page
 									</a>
+									<a href="{{ path('page_delete', { wikiPage: page.url }) }}" id="page_delete">
+										<i class="fa fa-trash-o"></i>
+										Delete Page
+									</a>
 								</li>
 								{% endif %}
 								{% if app.auth %}
@@ -101,7 +105,11 @@
 			<div class="row">
 				<div class="col-md-12">
 					<hr>
-					<small>File: {{ page.file }}{% if page.lastMod is defined %} (Last Updated: {{ page.lastMod|date('d.m.Y, H:i') }}){% endif %}</small>
+					<small>File: {{ page.file }}{% if page.modified is defined %} (Last Updated: {{ page.modified|date('d.m.Y, H:i') }}){% endif %}</small>
+					<!--<a href="{{ path('page_fav', { wikiPage: page.url }) }}" class="addFav">
+						<i class="fa fa-star-o"></i>
+						<i class="fa fa-star"></i>
+					</a>-->
 				</div>
 			</div>
 		</footer>

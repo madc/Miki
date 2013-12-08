@@ -12,7 +12,7 @@
 		{			
 			/* Resize textarea with window. */
 			$(window).resize(function() {
-				$('#form_pageContent').height( $(window).height() - 260);
+				$('#form_content').height($(window).height() - 260);
 			}).resize();
 			
 			/* Tabs for edit page. */
@@ -20,7 +20,7 @@
 
 				var mode = this.hash.slice(1);
 				if( mode != 'edit' )
-					$('#'+mode).load( 'view/'+mode, { 'content': $('#form_pageContent').val() } );
+					$('#'+mode).load( 'view/'+mode, { 'content': $('#form_content').val() } );
 		
 				if( mode )
 					$('.nav-tabs .dropdown-toggle span').html( $(this).html() );

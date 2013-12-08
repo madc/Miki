@@ -32,7 +32,90 @@ $app->get('/logout', function() use ($app)
 	return $app->redirect( $app['url_generator']->generate('login') );
 })->bind('logout');
 
-$app->get('/view/{mode}', function($mode) use ($app)
+/** Edit Page
+ *
+ */
+$app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
+{	
+	$pageService = $app['service.page'];
+	$page = $pageService($wikiPage);
+	
+	if (empty($page->content)) {
+		if (strtolower($page->name) == 'index') {
+            $page->content = '# '.ucfirst(end($page->categories));
+		} else {
+			$page->content = '# '.$page->name;
+		}
+	}
+	
+	$form = $app['form.factory']
+	->createBuilder('form', array(
+			'content' => $page->content
+		))
+		->add('content', 'textarea', array('attr' => array('class' => 'editor')))
+		->getForm();
+
+	if ($app['request']->getMethod() === 'POST') {
+		$fs = new Filesystem();
+
+		if (!$fs->exists($app['wiki.path']))
+			$fs->mkdir( $app['wiki.path'], 0777 );
+
+		if (!empty($page->categories) && !$fs->exists( $app['wiki.path'].$page->path)) {
+			$fs->mkdir($app['wiki.path'].$page->path, 0777);
+		}
+		
+		$form->bind($app['request']);
+		$data = $form->getData();
+
+		$fh = fopen($app['wiki.path'].$page->file, 'w');
+		fwrite($fh, $data['content']);
+		fclose($fh);
+
+		return $app->redirect($app['url_generator']->generate('page', array('wikiPage' => $wikiPage)));
+	}
+		
+	return $app['twig']->render('wiki_edit.html.twig', array(
+		'page' => $page,
+		'form' => $form->createView()
+	));
+})	->bind('page_edit')
+	->method('POST|GET')
+	->assert('wikiPage', '.+');
+
+/** Delete Page
+ *
+ */
+$app->get('/delete/{wikiPage}', function($wikiPage) use ($app)
+{
+	$pageService = $app['service.page'];
+	$page = $pageService($wikiPage);
+
+	if( $app['request']->getMethod() === 'POST' )
+	{
+		$fs = new Filesystem();
+
+		// Delete Category if empty, else delete file only.
+		if (count($page->siblings) === 0) {
+			$fs->remove($app['wiki.path'].$page->path);
+		} else {
+			$fs->remove($app['wiki.path'].$page->file);
+		}
+
+		return $app->redirect($app['url_generator']->generate('page'));
+	}
+	
+	return $app['twig']->render( 'wiki_delete.html.twig', array(
+		'page' => $page
+	));
+})	->bind('page_delete')
+	->method('POST|GET')
+	->assert('wikiPage', '.+');
+
+/** Render content for preview
+ *
+ */
+$app->get('/preview/{mode}', function($mode) use ($app)
 {
 	$mdownParser = new MarkdownExtraParser();
 	$content = $mdownParser->transformMarkdown( $app['request']->request->get('content') );
@@ -45,127 +128,38 @@ $app->get('/view/{mode}', function($mode) use ($app)
 })	->bind('preview')
 	->method('POST');
 
-/** Edit Page
+/** Add Page to favourites
  *
  */
-$app->get('/edit/{wikiPage}', function($wikiPage) use ($app)
+$app->get('/fav/{wikiPage}', function($wikiPage) use ($app)
 {
-	$fs = new Filesystem();
-
-	$categories = explode('/', $wikiPage);
-	$page = array_pop( $categories );
-	$categoriesString = implode('/', $categories);
+	/* Not yet implemented */
+	//$fs = new Filesystem();
+	//$fs->symlink('/path/to/source', '/path/to/destination');
 	
-	$pageArray = array(
-		'page' => array(
-			'name' => ucfirst( $page ),
-	 		'categories' => $categories,
-			'url' => $wikiPage,
-			'file' => $wikiPage.'.md'
-		)
-	);
-
-	if( $fs->exists( $app['wiki.path'].$wikiPage.'.md' ) )
-	{
-		$fh = fopen( $app['wiki.path'].$wikiPage.'.md', 'r' );
-		$content = fread( $fh, filesize($app['wiki.path'].$wikiPage.'.md') );
-		fclose($fh);
-
-		$pageArray['page']['lastMod'] = filemtime( $app['wiki.path'].$wikiPage.'.md' );
-	}
-	
-	if( empty($content) )
-	{
-		if( strtolower($page) == 'index' )
-			$pageArray['page']['content'] = '# '.ucfirst( end($categories) );
-		else
-			$pageArray['page']['content'] = '# '.ucfirst( $page );
-	}
-	else
-		$pageArray['page']['content'] = $content;
-	
-	$form = $app['form.factory']->createBuilder('form', array( 'pageContent' => $pageArray['page']['content'] ))
-		->add('pageContent', 'textarea', array('attr' => array('class' => 'wmd-input', 'id' => 'wmd-input')))
-		->getForm();
-
-	if( $app['request']->getMethod() === 'POST' )
-	{
-		if( !$fs->exists($app['wiki.path']) )
-			$fs->mkdir( $app['wiki.path'], 0777 );
-
-		if( !empty($categories) && !$fs->exists( $app['wiki.path'].$categoriesString) )
-			$fs->mkdir( $app['wiki.path'].$categoriesString, 0777 );
-		
-		$form->bind($app['request']);
-		$data = $form->getData();
-
-		$fh = fopen( $app['wiki.path'].$wikiPage.'.md', 'w' );
-		$mdownContent = fwrite($fh, $data['pageContent']);
-		fclose($fh);
-
-		return $app->redirect( $app['url_generator']->generate('page', array( 'wikiPage' => $wikiPage )) );
-	}
-
-	$pageArray['form'] = $form->createView();
-		
-	return $app['twig']->render( 'wiki_editor.html.twig', $pageArray );
-})	->bind('page_edit')
-	->method('POST|GET')
+	return $app->redirect($app['url_generator']->generate('page', array('wikiPage' => $wikiPage)));
+})	->bind('page_fav')
 	->assert('wikiPage', '.+');
 
 /** View Page
- *
+ *  Needs to be the last controller, otherwise the creation of pages is broken atm.
  */
 $app->get('/{wikiPage}', function($wikiPage) use ($app)
-{
-	$mdownParser = new MarkdownExtraParser();
-	$fs = new Filesystem();
+{	
+	$pageService = $app['service.page'];
+	$page = $pageService($wikiPage);
 	
-	$categories = explode('/', $wikiPage);
-	$page = array_pop( $categories );
-	$categoriesString = implode('/', $categories);
-	
-	$pageArray = array(
-		'page' => array(
-			'name' => ucfirst( $page ),
-	 		'categories' => $categories,
-			'url' => $wikiPage,
-			'file' => $wikiPage.'.md'
-		)
-	);
-	
-	if( $fs->exists( $app['wiki.path'].$wikiPage.'.md' ) )
-	{
-		$fh = fopen( $app['wiki.path'].$wikiPage.'.md', 'r' );
-		$content = fread( $fh, filesize($app['wiki.path'].$wikiPage.'.md') );
-		fclose($fh);
-		
-		$finder = new Finder();
-		$files = $finder
-			->files()
-			->in( $app['wiki.path'].$categoriesString )
-			->depth(0)
-			->name('*.md');
- 
-		foreach ($files as $file)
-		{
-		  if( ($categoriesString ? $categoriesString.'/' : '').$file->getRelativePathname() != $pageArray['page']['file'])
-			  $pageArray['page']['siblings'][] = array(
-				  'name' => ucfirst(substr($file->getRelativePathname(), 0, -3)),
-				  'url' => ($categoriesString ? $categoriesString.'/' : '').substr($file->getRelativePathname(), 0, -3)
-			  );
-		}
-		
-		$pageArray['page']['lastMod'] = filemtime( $app['wiki.path'].$wikiPage.'.md' );
-		
-		if( !empty($content) )
-		{
-			$pageArray['page']['content'] = $mdownParser->transformMarkdown( $content );
-			return $app['twig']->render( 'wiki_content.html.twig', $pageArray );
-		}
-	}
+	if ($page->exists) {
+		$mdownParser = new MarkdownExtraParser();
+		$parsedContent = $mdownParser->transformMarkdown($page->content);
 
-	return $app->redirect( $app['url_generator']->generate('page_edit', array( 'wikiPage' => $wikiPage )) );
+		return $app['twig']->render('wiki_content.html.twig', array(
+			'page' => $page,
+			'parsedContent' => $parsedContent
+		));
+	} else {
+		return $app->redirect($app['url_generator']->generate('page_edit', array('wikiPage' => $wikiPage)));
+	}
 })
 	->value('wikiPage', 'index')
 	->bind('page')

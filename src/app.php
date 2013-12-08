@@ -12,6 +12,7 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 $app = new Silex\Application();
 
 require __DIR__ . '/config.php';
+require __DIR__ . '/service.php';
 
 $app->register(new TwigServiceProvider(), array(
 	'twig.path' => __DIR__.'/../views'

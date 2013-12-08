@@ -1,0 +1,27 @@
+{% extends "wiki.html.twig" %}
+
+{% block title %}Edit {{ page.name }}{% endblock %}
+
+{% block content %}
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<form method="post" novalidate>
+			<div class="bs-callout bs-callout-danger">
+				<h4>Really delete this page?</h4>
+				<p>It will be gone forever.</p>
+				<div class="pull-right btn-group btn-group-sm">
+					<a href="{{ path('page', { wikiPage: page.url }) }}" class="btn btn-default" id="form_cancel">
+						<i class="fa fa-times"></i>
+						Cancel
+					</a>
+	            	<button type="submit" class="btn btn-danger">
+						<i class="fa fa-check"></i>
+						Delete Page
+					</button>
+				</div>
+				<br class="clear">
+			</div>
+	    </form>
+	</div>
+</div>
+{% endblock %}
