@@ -151,9 +151,19 @@ $app->get('/{wikiPage}', function($wikiPage) use ($app)
 	
 	if ($page->exists) {
 		$mdownParser = new MarkdownExtraParser();
+		
+		// Parse markdown
 		$parsedContent = $mdownParser->transformMarkdown($page->content);
 		
-		// Add class to non-existant links
+		// Parse non-existant links (ignore extneral urls )
+		$parsedContent = preg_replace_callback('/href=[\'"](?!ftp|http[s]?:\/\/)([^\'"]*)[\'"]/i', function ($str) use ($app) {			
+			$fs = new Filesystem();
+			if(!$fs->exists($app['wiki.path'].$str[1].'.md')) {
+			    return str_replace('href', 'class="missing-page" href', $str[0]);
+			}
+			
+			return $str[0];
+		}, $parsedContent);
 		
 		return $app['twig']->render('wiki_content.html.twig', array(
 			'page' => $page,
