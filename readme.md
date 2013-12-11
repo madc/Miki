@@ -58,6 +58,6 @@ The following keyboard shortcuts are available at the moment:
 * Alt+Ctrl+X (or Alt+Cmd+X) to dismiss changes
 * Alt+Ctrl+H (or Alt+Cmd+H) to jump to home
 
-### Responsible and theme-able via Twitter Bootstrap
+### Responsive and theme-able via Twitter Bootstrap
 
-The HTML layout is based on [Bootstrap 3](http://getbootstrap.com/) and the theme css-file can be defined in the settings.
+The HTML layout is based on [Bootstrap 3](http://getbootstrap.com/) and a theme css-file can optionally be defined in the settings.
