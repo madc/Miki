@@ -51,12 +51,12 @@ The pages can also easily be organized in categories. This can be achieved by us
 
 ### Hotkeys
 
-The following keyboard shortcuts are available at the moment:
+The following keyboard shortcuts are available:
 
-* Ctrl+E (or Cmd+E on MacOS X) to switch to Edit-Mode
-* Ctrl+S (or Cmd+S) to save changes
-* Alt+Ctrl+X (or Alt+Cmd+X) to dismiss changes
-* Alt+Ctrl+H (or Alt+Cmd+H) to jump to home
+* <kbd>Ctrl</kbd> + <kbd>E</kbd> (or <kbd>Cmd</kbd> + <kbd>E</kbd> on MacOS X) to switch to Edit-Mode
+* <kbd>Ctrl</kbd> + <kbd>S</kbd> (or <kbd>Cmd</kbd>+<kbd>S</kbd>) to save changes
+* <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>X</kbd> (or <kbd>Alt</kbd> + <kbd>Cmd</kbd> + <kbd>X</kbd>) to dismiss changes
+* <kbd>Alt</kbd> + <kbd>Ctrl</kbd> + <kbd>H</kbd> (or <kbd>Alt</kbd> + <kbd>Cmd</kbd> + <kbd>H</kbd>) to jump to home
 
 ### Responsive and theme-able via Twitter Bootstrap
 
