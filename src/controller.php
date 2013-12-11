@@ -3,7 +3,6 @@
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\HttpFoundation\Response;
-use dflydev\markdown\MarkdownExtraParser;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /** Login
@@ -117,13 +116,18 @@ $app->get('/delete/{wikiPage}', function($wikiPage) use ($app)
  */
 $app->get('/preview/{mode}', function($mode) use ($app)
 {
-	$mdownParser = new MarkdownExtraParser();
-	$content = $mdownParser->transformMarkdown( $app['request']->request->get('content') );
+	$content = $app['request']->request->get('content');
 	
-	if( $mode == 'raw' )
-		$content = nl2br( strip_tags($content) );
+	// Parse markdown (incl. advanced options)
+	$parseService = $app['service.parse'];
+	$parsedContent = $parseService($content, true);
 	
-	return $content;
+	// Remove HTML markup for raw text view
+	if ($mode == 'raw') {
+		$parsedContent = nl2br(strip_tags($parsedContent));
+	}
+	
+	return $parsedContent;
 	
 })	->bind('preview')
 	->method('POST');
@@ -150,20 +154,9 @@ $app->get('/{wikiPage}', function($wikiPage) use ($app)
 	$page = $pageService($wikiPage);
 	
 	if ($page->exists) {
-		$mdownParser = new MarkdownExtraParser();
-		
-		// Parse markdown
-		$parsedContent = $mdownParser->transformMarkdown($page->content);
-		
-		// Parse non-existant links (ignore extneral urls )
-		$parsedContent = preg_replace_callback('/href=[\'"](?!ftp|http[s]?:\/\/)([^\'"]*)[\'"]/i', function ($str) use ($app) {			
-			$fs = new Filesystem();
-			if(!$fs->exists($app['wiki.path'].$str[1].'.md')) {
-			    return str_replace('href', 'class="missing-page" href', $str[0]);
-			}
-			
-			return $str[0];
-		}, $parsedContent);
+		// Parse markdown (incl. advanced options)
+		$parseService = $app['service.parse'];
+		$parsedContent = $parseService($page->content, true);
 		
 		return $app['twig']->render('wiki_content.html.twig', array(
 			'page' => $page,

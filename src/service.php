@@ -1,7 +1,11 @@
 <?php
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
+use dflydev\markdown\MarkdownExtraParser;
 
+/** Page Service
+ *  Retrieve all infos of a given page
+ */
 $app['service.page'] = $app->protect(function ($wikiPage) use ($app) {
 	$fs = new Filesystem();
 	
@@ -48,4 +52,26 @@ $app['service.page'] = $app->protect(function ($wikiPage) use ($app) {
 	}
 	
 	return $page;
+});
+
+/** Parsing Service
+ *  Returns the parsed content.
+ */
+$app['service.parse'] = $app->protect(function ($content, $advancedParser=false) use ($app) {
+	$mdownParser = new MarkdownExtraParser();
+	$parsedContent = $mdownParser->transformMarkdown($content);
+	
+	if($advancedParser) {
+		// Parse non-existant links (ignore extneral urls )
+		$parsedContent = preg_replace_callback('/href=[\'"](?!ftp|http[s]?:\/\/)([^\'"]*)[\'"]/i', function ($str) use ($app) {			
+			$fs = new Filesystem();
+			if(!$fs->exists($app['wiki.path'].$str[1].'.md')) {
+			    return str_replace('href', 'class="missing-page" href', $str[0]);
+			}
+		
+			return $str[0];
+		}, $parsedContent);
+	}
+
+	return $parsedContent;
 });
