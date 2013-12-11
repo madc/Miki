@@ -10,8 +10,8 @@
 	
 		{% block stylesheets %}
 		<link href="{{ baseUrl }}/css/bootstrap.min.css" rel="stylesheet">
-		<link href="{{ baseUrl }}/css/{{ app.theme }}" rel="stylesheet">		
-		<link href="{{ baseUrl }}/css/font-awesome.min.css" rel="stylesheet">		
+		{% if app.theme %}<link href="{{ baseUrl }}/css/{{ app.theme }}" rel="stylesheet">{% endif %}
+		<link href="{{ baseUrl }}/css/font-awesome.min.css" rel="stylesheet">
 		<link href="{{ baseUrl }}/css/styles.css" rel="stylesheet">
 		{% endblock %}
 
@@ -93,7 +93,7 @@
 				</div>
 			</nav>
 		
-			<div class="container">
+			<div class="container content">
 				{% block content %}
 				{% endblock %}
 			</div>
@@ -105,7 +105,13 @@
 			<div class="row">
 				<div class="col-md-12">
 					<hr>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-10">
 					<small>File: {{ page.file }}{% if page.modified is defined %} (Last Updated: {{ page.modified|date('d.m.Y, H:i') }}){% endif %}</small>
+				</div>
+				<div class="col-md-2">
 					<!--<a href="{{ path('page_fav', { wikiPage: page.url }) }}" class="addFav">
 						<i class="fa fa-star-o"></i>
 						<i class="fa fa-star"></i>

@@ -8,7 +8,7 @@ $app['wiki.path'] =  __DIR__.'/../data/wiki/';
 $app['uploads.path'] =  __DIR__.'/../data/uploads/';
 
 // Define Bootstrap Theme
-$app['theme'] = 'bootstrap-theme.min.css';
+$app['theme'] = '';
 
 // Setup authentication
 $app['auth'] =  false;
