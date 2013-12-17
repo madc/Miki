@@ -1,14 +1,14 @@
-# Miki. Documentation
+# Miki Documentation
 
-Miki. is a small [markdown](http://daringfireball.net/projects/markdown/)-based wiki system. Beside the basic markdown specs, it also has full support for the [markdown extra extension](http://michelf.ca/projects/php-markdown/extra/). It is written in PHP using the [Silex](http://silex.sensiolabs.org/) framework as basis. The pages are saved as .md files in the file structure, no Database is needed.
+Miki is a small [markdown](http://daringfireball.net/projects/markdown/)-based wiki system. Beside the basic markdown specs, it also has full support for the [markdown extra extension](http://michelf.ca/projects/php-markdown/extra/). It is written in PHP using the [Silex](http://silex.sensiolabs.org/) framework as basis. The pages are saved as .md files in the file structure, no Database is needed.
 
 
 ## Installation
 
 1) Clone the repository.
 ~~~
-$ git clone https://github.com/madc/Miki..git
-$ cd Miki./
+$ git clone https://github.com/madc/Miki.git
+$ cd Miki/
 ~~~
 
 2) Get [Composer](http://getcomposer.org) and install dependencies.
@@ -17,7 +17,7 @@ $ wget http://getcomposer.org/composer.phar
 $ php composer.phar install
 ~~~
 
-Visit the Miki. startpage in your broser and setup your first page. You probably find it somewhere like <http://localhost/path/to/Miki./web/>
+Visit the Miki startpage in your broser and setup your first page. You probably find it somewhere like <http://localhost/path/to/Miki/web/>
 
 Inside 'src/config.php' you can change the settings as you like.
 
@@ -25,7 +25,7 @@ Inside 'src/config.php' you can change the settings as you like.
 
 ### Basic Authentication
 
-Miki. supports a Basic Authentication. Have a look at src/config.php to set it up.
+Miki supports a Basic Authentication. Have a look at src/config.php to set it up.
 The authentication is based on this [Gist](https://gist.github.com/1740012) by Masao Maeda.
 
 ### Pages
