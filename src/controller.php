@@ -156,8 +156,8 @@ $app->get('/search/{query}', function($query) use ($app)
 		->in($app['wiki.path'])
 		->files()
 		->name('*'.$query.'*.md');
-	
-	// Find in files (if enabled)
+
+	// Find in files (if enabled in settings)
 	if($app['search.inFiles']) {
 		$findContent = new Finder();
 		$findContent->files()
@@ -182,7 +182,8 @@ $app->get('/search/{query}', function($query) use ($app)
 	}
 
 	return json_encode($results);
-})	->bind('search');
+})	->bind('search')
+	->value('query', '');
 
 /** View Page
  *  Needs to be the last controller, otherwise it breaks a lot of stuff.
