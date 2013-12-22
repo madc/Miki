@@ -145,6 +145,45 @@ $app->get('/fav/{wikiPage}', function($wikiPage) use ($app)
 })	->bind('page_fav')
 	->assert('wikiPage', '.+');
 
+/** Search
+ *
+ */
+$app->get('/search/{query}', function($query) use ($app)
+{	
+	// Find in Filename
+	$finder = new Finder();
+	$finder->files()
+		->in($app['wiki.path'])
+		->files()
+		->name('*'.$query.'*.md');
+	
+	// Find in files (if enabled)
+	if($app['search.inFiles']) {
+		$findContent = new Finder();
+		$findContent->files()
+			->in($app['wiki.path'])
+			->files()
+			->name('*.md')
+			->contains($query);
+		
+		$finder->append($findContent);
+	}
+	
+	$results = array();
+	foreach($finder as $file) {
+		$filename = str_replace(($file->getRelativePath() ? $file->getRelativePath().'/' : ''), '', $file->getRelativePathname());
+		
+		$results[$file->getRelativePathname()] = array(
+			'file' => $filename,
+			'path' => $file->getRelativePath(),
+			'name' => ucfirst(str_replace('.md', '', $filename)),
+			// 'content' => $file->getContents()
+		);
+	}
+
+	return json_encode($results);
+})	->bind('search');
+
 /** View Page
  *  Needs to be the last controller, otherwise it breaks a lot of stuff.
  */

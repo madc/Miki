@@ -14,3 +14,6 @@ $app['theme'] = '';
 $app['auth'] =  false;
 $app['auth.user'] = 'username';
 $app['auth.password'] = md5('password');
+
+// Search
+$app['search.inFiles'] = true;
