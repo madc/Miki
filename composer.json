@@ -1,6 +1,6 @@
 {
-    "name": "madc/miki.",
-    "description": "Miki. is a small markdown-based wiki system.",
+    "name": "madc/miki",
+    "description": "Miki is a small markdown-based wiki system.",
     "keywords": ["wiki", "markdown", "silex", "twig", "php"],
     "homepage": "https://github.com/madc/Miki./",
     "license": "MIT",
