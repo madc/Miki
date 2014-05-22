@@ -19,6 +19,6 @@
 		"symfony/finder": "2.3.*",
 		"symfony/twig-bridge": "2.3.*",
 
-		"dflydev/markdown": "1.0.3"
+		"erusev/parsedown-extra": "dev-master"
     }
 }
